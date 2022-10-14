@@ -1,0 +1,34 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: alexfalkowski/go:1.19
+    steps:
+      - checkout
+      # - run:
+      #     dockerize -wait tcp://localhost:9092 -timeout 1m
+      - run: make dep
+      - run: make lint
+      - run: make specs
+      - store_artifacts:
+          path: test
+    resource_class: large
+  release:
+    docker:
+      - image: alexfalkowski/release:2.0
+    steps:
+      - checkout
+      - run: release
+
+workflows:
+  go-kafka-example:
+    jobs:
+      - build
+      - release:
+          context: gh
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
