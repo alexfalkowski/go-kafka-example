@@ -31,33 +31,10 @@ fix-lint:
 
 # Run all the specs
 specs:
-	go test -race -mod vendor -v -covermode=atomic -coverpkg=./... -coverprofile=test/profile.cov ./...
-
-remove-generated-coverage:
-	cat test/profile.cov | grep -v "test" > test/final.cov
-
-# Get the HTML coverage for go
-html-coverage: remove-generated-coverage
-	go tool cover -html test/final.cov
-
-# Get the func coverage for go
-func-coverage: remove-generated-coverage
-	go tool cover -func test/final.cov
-
-# Check outdated go deps
-outdated:
-	go list -u -m -mod=mod -json all | go-mod-outdated -update -direct
+	go test -race -mod vendor -v -covermode=atomic -coverpkg=./... -coverprofile=profile.cov ./...
 
 # Update go dep
 update-dep: get tidy vendor
 
 # Update all go dep
 update-all-deps: get-all tidy vendor
-
-# Start the environment
-start:
-	tools/env start
-
-# Stop the environment
-stop:
-	tools/env stop
