@@ -53,8 +53,6 @@ linters:
     - predeclared
     - promlinter
     - revive
-    - rowserrcheck
-    - sqlclosecheck
     - stylecheck
     - tenv
     - testpackage
@@ -62,6 +60,5 @@ linters:
     - tparallel
     - unconvert
     - unparam
-    - wastedassign
     - whitespace
     - wsl

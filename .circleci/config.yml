@@ -4,10 +4,10 @@ jobs:
   build:
     docker:
       - image: alexfalkowski/go:1.19
+      - image: vectorized/redpanda:latest
     steps:
       - checkout
-      # - run:
-      #     dockerize -wait tcp://localhost:9092 -timeout 1m
+      - run: dockerize -wait tcp://localhost:9092 -timeout 1m
       - run: make dep
       - run: make lint
       - run: make specs
